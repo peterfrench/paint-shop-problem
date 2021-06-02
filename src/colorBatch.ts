@@ -44,6 +44,8 @@ export const getColorBatch = async (
             const position = parseInt(preferences[p])
             const finish = preferences[p+1]
             customerPreferences.colors[position] = finish as FINISH
+            // If the customer has a matte color, add a flag in their preferences
+            // to speed up matte lookup.
             if(finish === FINISH.MATTE) {
                 customerPreferences.hasMatte = true
                 customerPreferences.mattePosition = position
@@ -83,7 +85,7 @@ export const getColorBatch = async (
             }
         }
         
-        // If customer doesn't have a matching coslor, grab it's matte color
+        // If the customer doesn't have a matching color, grab it's matte color
         // and update the batch to include that matte color. When a customer
         // doesn't have a matching color and doesn't have a matte finish, there
         // is no solution for this group of customers. 
